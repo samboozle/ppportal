@@ -32,3 +32,11 @@ export const defaultYesteryearEpisode: YesteryearEpisode = {
     deepDiveTwoTopic: null,
     popCultureTopics: new Set()
 };
+
+export type YesteryearSegment =
+    | "intro"
+    | "shortStories"
+    | "deepDiveOne"
+    | "deepDiveTwo"
+    | "popCulture"
+    | "outro";

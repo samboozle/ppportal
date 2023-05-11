@@ -1,52 +1,70 @@
 <script lang="ts">
-    // @ts-nocheck
+    import YYCSegment from "./../../../lib/components/YYCSegment.svelte";
     import { yesteryearEpisode } from "$lib/stores";
+    import type { YesteryearSegment } from "$lib/data/yesteryear";
+
+    let loading = false;
+    let response;
 
     const writeYesteryearChronicles = async () => {
-        const response = await fetch("/api/yesteryear-chronicles/write-script", {
+        loading = true;
+        const response = await fetch("/api/write-podcast", {
             method: "POST",
             body: JSON.stringify({
-                func: "writeYesteryearChronicles",
-                details: {
-                    episode: $yesteryearEpisode
+                episode: {
+                    ...$yesteryearEpisode,
+                    holidays: [...$yesteryearEpisode.holidays],
+                    popCultureTopics: [...$yesteryearEpisode.popCultureTopics],
+                    shortStoriesTopics: [...$yesteryearEpisode.shortStoriesTopics]
                 }
             }),
             headers: {
                 "content-type": "application/json"
             }
         });
+
+        const changes = await response.json();
+        loading = false;
+
+        yesteryearEpisode.update((ep) => ({
+            ...ep,
+            intro: changes.intro,
+            shortStories: changes.shortStories,
+            popCulture: changes.popCulture
+        }));
     };
 
-    const rewriteSegment = async (segment: any, adjustments: string[]) => {
-        const response = await fetch("/api/yesteryear-chronicles/write-script", {
-            method: "POST",
-            body: JSON.stringify({
-                func: "writeYesteryearChronicles",
-                details: {
-                    segment,
-                    adjustments
-                }
-            }),
-            headers: {
-                "content-type": "application/json"
-            }
-        });
-    };
+    $: {
+        console.log($yesteryearEpisode["intro"]);
+    }
+
+    const yesteryearSegmentTitles: YesteryearSegment[] = [
+        "intro",
+        "shortStories",
+        "deepDiveOne",
+        "deepDiveTwo",
+        "popCulture"
+    ];
 </script>
 
-<div>
-    <button on:click={() => writeYesteryearChronicles($yesteryearEpisode)}> WRITE </button>
+<div class="w-full mb-2">
+    {#if loading}
+        writing...
+    {:else}
+        <button class="btn btn-xs normal-case" on:click={writeYesteryearChronicles}> write </button>
+        <button class="btn btn-xs normal-case"> download </button>
+    {/if}
 </div>
 
-<div>
-    {#each ["intro", "shortStories", "deepDiveOne", "deepDiveTwo", "popCulture"] as segment}
-        <div>
-            <h4>{segment}</h4>
-            <ul>
-                {#each $yesteryearEpisode[segment] as { reader, text }}
-                    <li>{reader}: {text}</li>
-                {/each}
-            </ul>
-        </div>
+<div class="script-container">
+    {#each yesteryearSegmentTitles as segment}
+        <YYCSegment {segment} />
     {/each}
 </div>
+
+<style>
+    .script-container {
+        height: 36rem;
+        @apply flex flex-col overflow-y-scroll space-y-2;
+    }
+</style>
