@@ -1,7 +1,6 @@
 <script lang="ts">
     import "../app.css";
     import { Footer, SidebarPage } from "$lib";
-    import { sillyText } from "$lib/stores";
 
     $: menuOpen = false;
 </script>
@@ -9,12 +8,9 @@
 <main>
     <div class="flex flex-row h-screen">
         <SidebarPage {menuOpen}>
-            <div class="flex flex-col">
+            <div class="flex flex-col h-full overflow-y-hidden">
                 <div class="os-bar">
-                    <label for="sidebar-drawer" class="os-button">{$sillyText("menu")}</label>
-                    <button class="os-button" on:click={sillyText.randomize}>
-                        {$sillyText("bored?")}
-                    </button>
+                    <label for="sidebar-drawer" class="os-button">menu</label>
                 </div>
                 <div class="main-content">
                     <slot />
@@ -23,7 +19,7 @@
         </SidebarPage>
     </div>
 
-    <Footer />
+    <!-- <Footer /> -->
 </main>
 
 <style>
@@ -32,10 +28,10 @@
     }
 
     .os-button {
-        @apply btn btn-ghost rounded-none text-sm normal-case font-normal w-16;
+        @apply btn btn-ghost rounded-none text-sm normal-case font-normal px-2;
     }
 
     .main-content {
-        @apply p-2;
+        @apply p-2 h-full;
     }
 </style>

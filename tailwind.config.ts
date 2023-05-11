@@ -32,13 +32,13 @@ export default {
     ],
     daisyui: {
         styled: true,
-        themes: ["valentine"],
+        themes: ["valentine", "retro"],
         base: true,
         utils: true,
         logs: true,
         rtl: false,
         prefix: "",
-        darkTheme: "forest"
+        darkTheme: "retro"
     },
     darkMode: "media"
 };

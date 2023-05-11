@@ -1,17 +1,12 @@
 <script lang="ts">
     import { page } from "$app/stores";
-    import { sillyText } from "$lib/stores";
     export let href: string;
     export let text: string;
 
     $: active = $page.url.pathname.split("/").slice(0, 2).join("/") === href;
-
-    $: displayText = $sillyText(text);
 </script>
 
-<a class={"p-1 " + (active ? "active" : "")} {href}>
-    {displayText}
-</a>
+<a class={"p-1 " + (active ? "active" : "")} {href}> {text} </a>
 
 <style>
     a {

@@ -5,8 +5,9 @@
 
     const sidebarLinks = [
         { text: "home", href: "/" },
-        { text: "about", href: "/about" },
-        { text: "projects", href: "/projects" }
+        { text: "yesteryear", href: "/yesteryear-chronicles" },
+        { text: "ai insider", href: "/ai-insider-daily" },
+        { text: "reddit", href: "/reddit" }
     ];
 </script>
 
