@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { YesteryearLine, YesteryearSegment } from "$lib/data/yesteryear";
     import { yesteryearEpisode } from "$lib/stores";
-    import ChatBubble from "./ChatBubble.svelte";
+    import { ChatBubble } from "$lib";
 
     export let segment: YesteryearSegment;
 

@@ -3,7 +3,11 @@ import { ChatOpenAI } from "langchain/chat_models/openai";
 import { HumanChatMessage, SystemChatMessage } from "langchain/schema";
 import { OPEN_AI_API_KEY } from "$env/static/private";
 import { json } from "@sveltejs/kit";
-import { yesteryearDirective, yesteryearFormatting } from "$lib/prompts/yesteryear-chronicles";
+import {
+    intro,
+    yesteryearDirective,
+    yesteryearFormatting
+} from "$lib/prompts/yesteryear-chronicles";
 
 const yesteryearAuthor = new ChatOpenAI({
     temperature: 0.75,
@@ -12,28 +16,6 @@ const yesteryearAuthor = new ChatOpenAI({
 });
 
 const writeYesteryearChronicles = async (episode: YesteryearEpisode) => {
-    console.log(episode);
-
-    const intro = `
-Write the introduction to today's episode, starting with "Welcome to 'The Yesteryear Chronicles'...".
-Offer an overview of the show, mentioning three of the topics.
-Adrian and Becca should play off of each other in this introduction.
-Write each host's line in his or her voice based on their personalities and preferences.
-The date is ${episode.date}. Include a joke about time.
-
-Here are today's topics:
-${[
-    episode.deepDiveOneTopic,
-    episode.deepDiveTwoTopic,
-    ...episode.shortStoriesTopics,
-    ...episode.popCultureTopics
-]
-    .map((topic) => `- ${topic}`)
-    .join("\n")}
-
-${yesteryearFormatting}
-`;
-
     const shortStories = `
 Write the Short Stories segment for ${episode.date}. This will cover several topics (listed below).
 
@@ -67,7 +49,7 @@ Create a segment for 'The Yesteryear Chronicles,' a podcast that explores histor
     };
 
     for (const [segment, prompt] of [
-        ["intro", intro]
+        ["intro", intro(episode)]
         // ["shortStories", shortStories]
         // ["deepDiveOne", deepDiveOne]
     ]) {

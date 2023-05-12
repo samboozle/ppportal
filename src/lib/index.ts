@@ -1,8 +1,10 @@
 // components
+import ChatBubble from "./components/ChatBubble.svelte";
 import Footer from "./components/Footer.svelte";
 import SidebarPage from "./components/SidebarPage.svelte";
 import Tab from "./components/Tab.svelte";
 import wiki from "wikipedia";
+// import { dummy } from "./server";
 
 // images
 
@@ -18,4 +20,4 @@ const getThisDayInHistory = async (date: Date) => {
     return events;
 };
 
-export { Footer, SidebarPage, Tab, images, getThisDayInHistory };
+export { ChatBubble, Footer, SidebarPage, Tab, images, getThisDayInHistory };

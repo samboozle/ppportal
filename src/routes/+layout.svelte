@@ -1,6 +1,22 @@
 <script lang="ts">
     import "../app.css";
     import { Footer, SidebarPage } from "$lib";
+    import { io } from "socket.io-client";
+    import { page } from "$app/stores";
+
+    const socket = io();
+
+    socket.on("handshake", (message) => {
+        console.log(message);
+    });
+
+    socket.on("heardChange", (message) => {
+        console.log(message);
+    });
+
+    $: {
+        socket.emit("routeChange", $page.url.pathname);
+    }
 
     $: menuOpen = false;
 </script>
