@@ -11,6 +11,7 @@ export type YesteryearEpisode = {
     deepDiveTwo: YesteryearLine[];
     popCulture: YesteryearLine[];
     outro: YesteryearLine[];
+    summary: YesteryearLine[];
     holidays: Set<string>;
     shortStoriesTopics: Set<string>;
     deepDiveOneTopic: string | null;
@@ -26,6 +27,7 @@ export const defaultYesteryearEpisode: YesteryearEpisode = {
     deepDiveTwo: [],
     popCulture: [],
     outro: [],
+    summary: [],
     holidays: new Set(),
     shortStoriesTopics: new Set(),
     deepDiveOneTopic: null,
@@ -39,4 +41,5 @@ export type YesteryearSegment =
     | "deepDiveOne"
     | "deepDiveTwo"
     | "popCulture"
-    | "outro";
+    | "outro"
+    | "summary";

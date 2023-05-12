@@ -6,8 +6,29 @@ import type { eventResult } from "wikipedia/dist";
 import {
     defaultYesteryearEpisode,
     type YesteryearEpisode,
-    type YesteryearLine
+    type YesteryearLine,
+    type YesteryearSegment
 } from "./data/yesteryear";
+import { io } from "socket.io-client";
+
+const socket = io();
+
+const makeSocketManager = () => {
+    const { subscribe, set, update } = writable({
+        socket,
+        currentlyWriting: false,
+        currentTask: "none",
+        textBuffer: ""
+    });
+
+    return {
+        subscribe,
+        set,
+        update
+    };
+};
+
+const socketManager = makeSocketManager();
 
 const makeYesteryearEpisode = () => {
     const { subscribe, set, update } = writable<YesteryearEpisode>(defaultYesteryearEpisode);
@@ -53,6 +74,7 @@ const makeYesteryearEpisode = () => {
                 return episode;
             });
         }
+        // toPrettyScript: () => {}
     };
 };
 
@@ -76,4 +98,25 @@ const makeWikipediaToday = () => {
 const yesteryearEpisode = makeYesteryearEpisode();
 const wikipediaToday = makeWikipediaToday();
 
-export { yesteryearEpisode, wikipediaToday };
+socket.on("updateYesteryearEpisode", (message) => {
+    yesteryearEpisode.update((episode) => {
+        episode[message.segment as YesteryearSegment] = message.lines;
+        return episode;
+    });
+});
+
+socket.on("addTokenToBuffer", (message) => {
+    socketManager.update((manager) => {
+        manager.textBuffer += message;
+        return manager;
+    });
+});
+
+socket.on("setBuffer", (message) => {
+    socketManager.update((manager) => {
+        manager.textBuffer = message;
+        return manager;
+    });
+});
+
+export { socketManager, yesteryearEpisode, wikipediaToday };

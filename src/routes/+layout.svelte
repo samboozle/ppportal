@@ -1,16 +1,15 @@
 <script lang="ts">
     import "../app.css";
     import { Footer, SidebarPage } from "$lib";
-    import { io } from "socket.io-client";
     import { page } from "$app/stores";
-    import { setContext } from "svelte";
+    import { socketManager } from "$lib/stores";
 
-    const socket = io();
-
-    setContext("socket", socket);
+    const emit = (event: string, message: any) => {
+        $socketManager.socket.emit(event, message);
+    };
 
     $: {
-        socket.emit("routeChange", $page.url.pathname);
+        emit("routeChange", $page.url.pathname);
     }
 
     $: menuOpen = false;

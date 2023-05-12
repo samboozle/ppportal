@@ -32,13 +32,9 @@ const writeYesteryearChronicles = async (episode: YesteryearEpisode) => {
         // ["shortStories", shortStories]
         // ["deepDiveOne", deepDiveOne]
     ]) {
-        console.log("asking ", prompt);
-
         const { text } = await yesteryearAuthor.call([new HumanChatMessage(prompt)]);
 
         const json = JSON.parse(text);
-
-        console.log("got ", text);
 
         response[segment as "intro" | "shortStories"] = json.lines as YesteryearLine[];
     }

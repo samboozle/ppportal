@@ -24,4 +24,5 @@ export type YesteryearSegment =
     | "deepDiveOne"
     | "deepDiveTwo"
     | "popCulture"
-    | "outro";
+    | "outro"
+    | "summary";

@@ -5,7 +5,7 @@
     export let segment: YesteryearSegment;
 
     $: line = $yesteryearEpisode[segment][index];
-    $: rowCount = Math.ceil(line.text.length / 115);
+    $: rowCount = Math.ceil(line.text.length / 45);
 
     const updateLineText = (e: any) => {
         yesteryearEpisode.update((ep) => {

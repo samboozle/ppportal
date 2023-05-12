@@ -20,4 +20,10 @@ const getThisDayInHistory = async (date: Date) => {
     return events;
 };
 
-export { ChatBubble, Footer, SidebarPage, Tab, images, getThisDayInHistory };
+const friendlyDate = (date: Date) =>
+    date.toLocaleString("en-US", {
+        month: "long",
+        day: "numeric"
+    });
+
+export { ChatBubble, Footer, SidebarPage, Tab, images, getThisDayInHistory, friendlyDate };

@@ -31,7 +31,7 @@
                                             on:click={() =>
                                                 yesteryearEpisode.addBulkStory(
                                                     "shortStoriesTopics",
-                                                    text
+                                                    `${text} (${year})`
                                                 )}>📓</button
                                         >
                                         <button
@@ -39,7 +39,7 @@
                                             on:click={() =>
                                                 yesteryearEpisode.addDeepDive(
                                                     "deepDiveOneTopic",
-                                                    text
+                                                    `${text} (${year})`
                                                 )}>1️⃣</button
                                         >
                                         <button
@@ -47,7 +47,7 @@
                                             on:click={() =>
                                                 yesteryearEpisode.addDeepDive(
                                                     "deepDiveTwoTopic",
-                                                    text
+                                                    `${text} (${year})`
                                                 )}>2️⃣</button
                                         >
                                         <button
@@ -55,7 +55,7 @@
                                             on:click={() =>
                                                 yesteryearEpisode.addBulkStory(
                                                     "popCultureTopics",
-                                                    text
+                                                    `${text} (${year})`
                                                 )}>🍿</button
                                         >
                                     </th>
@@ -92,7 +92,7 @@
                                             on:click={() =>
                                                 yesteryearEpisode.addBulkStory(
                                                     "shortStoriesTopics",
-                                                    text
+                                                    `${text} (birth, ${year})`
                                                 )}>📓</button
                                         >
                                         <button
@@ -100,7 +100,7 @@
                                             on:click={() =>
                                                 yesteryearEpisode.addDeepDive(
                                                     "deepDiveOneTopic",
-                                                    text
+                                                    `${text} (birth, ${year})`
                                                 )}>1️⃣</button
                                         >
                                         <button
@@ -108,7 +108,7 @@
                                             on:click={() =>
                                                 yesteryearEpisode.addDeepDive(
                                                     "deepDiveTwoTopic",
-                                                    text
+                                                    `${text} (birth, ${year})`
                                                 )}>2️⃣</button
                                         >
                                         <button
@@ -116,7 +116,7 @@
                                             on:click={() =>
                                                 yesteryearEpisode.addBulkStory(
                                                     "popCultureTopics",
-                                                    text
+                                                    `${text} (birth, ${year})`
                                                 )}>🍿</button
                                         >
                                     </th>

@@ -11,12 +11,6 @@ const podcastEditor = new ChatOpenAI({
 });
 
 const rewriteSegment = async (segment: any, original: string, adjustments: string) => {
-    await podcastEditor.call([
-        new SystemChatMessage(`
-You are a script editor for a podcast. Your job is to rewrite a scripted segment from a podcast based on feedback.
-`)
-    ]);
-
     const rewrite = `
 This is the segment name: """${segment}"""
 

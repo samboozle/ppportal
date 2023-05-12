@@ -2,6 +2,9 @@
     import type { YesteryearLine, YesteryearSegment } from "$lib/data/yesteryear";
     import { yesteryearEpisode } from "$lib/stores";
     import { ChatBubble } from "$lib";
+    import { socketManager } from "$lib/stores";
+
+    const { socket } = $socketManager;
 
     export let segment: YesteryearSegment;
 
@@ -9,27 +12,14 @@
     let rewriting = false;
     $: buttonText = rewriting ? "edit" : "rewrite";
 
-    const rewriteSegment = async (segment: YesteryearSegment, adjustments: string) => {
-        const response = await fetch("/api/rewrite-segment", {
-            method: "POST",
-            body: JSON.stringify({
-                segment,
-                original: $yesteryearEpisode[segment].reduce(
-                    (acc: string, line: YesteryearLine) => acc + `${line.reader}: ${line.text}\n\n`,
-                    ""
-                ),
-                adjustments
-            }),
-            headers: {
-                "content-type": "application/json"
-            }
-        });
-
-        const { lines } = await response.json();
-
-        yesteryearEpisode.update((ep) => {
-            ep[segment] = lines;
-            return ep;
+    const rewriteSegment = () => {
+        socket.emit("rewriteSegment", {
+            segment,
+            original: $yesteryearEpisode[segment].reduce(
+                (acc: string, line: YesteryearLine) => acc + `${line.reader}: ${line.text}\n\n`,
+                ""
+            ),
+            adjustments
         });
     };
 </script>
@@ -52,12 +42,7 @@
         <div class="divider">feedback</div>
         <div class="flex justify-between items-end">
             <textarea class="chat-bubble w-5/6 text-2xs" bind:value={adjustments} />
-            <button
-                class="btn btn-xs normal-case"
-                on:click={() => rewriteSegment(segment, adjustments)}
-            >
-                submit
-            </button>
+            <button class="btn btn-xs normal-case" on:click={rewriteSegment}> submit </button>
         </div>
     {:else}
         {#each $yesteryearEpisode[segment] as _, index}
