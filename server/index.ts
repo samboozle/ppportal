@@ -17,13 +17,11 @@ const configureServer = (server: any) => {
     const io = new Server(server.httpServer);
 
     io.on("connect", (socket) => {
-        console.log("server heard it!");
         socket.emit("handshake", "Connection made successfully");
-    });
-
-    io.on("routeChange", (socket) => {
-        console.log("from client: ", socket);
-        socket.emit("heardChange", "gotcha!");
+        socket.on("routeChange", (message) => {
+            console.log("from client: ", message);
+            socket.emit("heardChange", "gotcha!");
+        });
     });
 };
 
