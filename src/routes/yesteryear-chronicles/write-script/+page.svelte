@@ -9,14 +9,18 @@
 
     let loading = false;
 
+    $: {
+        console.log($yesteryearEpisode);
+    }
+
     const writeYesteryearChronicles = () => {
         socket.emit("writeYesteryearChronicles", {
             date: $yesteryearEpisode.date,
             holidays: [...$yesteryearEpisode.holidays],
             popCultureTopics: [...$yesteryearEpisode.popCultureTopics],
             shortStoriesTopics: [...$yesteryearEpisode.shortStoriesTopics],
-            deepDiveOneTopic: $yesteryearEpisode.deepDiveOne,
-            deepDiveTwoTopic: $yesteryearEpisode.deepDiveTwo
+            deepDiveOneTopic: $yesteryearEpisode.deepDiveOneTopic,
+            deepDiveTwoTopic: $yesteryearEpisode.deepDiveTwoTopic
         });
     };
 

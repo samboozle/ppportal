@@ -1,4 +1,4 @@
 <script lang="ts">
 </script>
 
-<div class="" />
+<div class="hero">pp</div>

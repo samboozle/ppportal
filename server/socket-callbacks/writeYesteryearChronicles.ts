@@ -21,15 +21,6 @@ export default (socket: Socket, chat: ChatOpenAI) => async (message: YesteryearE
 
     socket.emit("setBuffer", "");
 
-    const response = {
-        intro: [] as YesteryearLine[],
-        shortStories: [] as YesteryearLine[],
-        popCulture: [] as YesteryearLine[],
-        deepDiveOne: [] as YesteryearLine[],
-        deepDiveTwo: [] as YesteryearLine[],
-        outro: [] as YesteryearLine[]
-    };
-
     for (const [segment, prompt] of [
         ["intro", intro(message)],
         ["shortStories", shortStories(message)],
@@ -40,6 +31,8 @@ export default (socket: Socket, chat: ChatOpenAI) => async (message: YesteryearE
         ["summary", summary(message)]
     ]) {
         socket.emit("addTokenToBuffer", `writing ${segment}\n\n`);
+
+        console.log("prompt for", segment, prompt);
 
         const { text } = await chat.call([new HumanChatMessage(prompt)]);
         // const { text } = await chat.call({ input: prompt });
@@ -53,6 +46,4 @@ export default (socket: Socket, chat: ChatOpenAI) => async (message: YesteryearE
 
         socket.emit("setBuffer", "");
     }
-
-    return response;
 };
