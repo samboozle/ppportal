@@ -1,4 +1,4 @@
-import type { YesteryearEpisode } from "../types";
+import type { YesteryearEpisode } from "$lib/data/yesteryear";
 
 const yesteryearDirective = `
 You are a script writer for a podcast. This is a podcast called "The Yesteryear Chronicles".
@@ -53,4 +53,15 @@ ${[
 ${yesteryearFormatting}
 `;
 
-export { intro, yesteryearDirective, yesteryearFormatting };
+const shortStories = (episode: YesteryearEpisode) => `
+Write the Short Stories segment for ${episode.date}. This will cover several topics (listed below).
+
+Here are today's topics:
+${[...episode.shortStoriesTopics].map((topic) => `- ${topic}`).join("\n")}
+    
+Write the segment surveying these topics with banter between Adrian and Becca. Please write a LONG segment, covering each story with at least 5 sentences. Your output should be at least 250 tokens. Use only reliable sources.
+
+${yesteryearFormatting}
+`;
+
+export { intro, shortStories, yesteryearDirective, yesteryearFormatting };

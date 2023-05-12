@@ -1,17 +1,21 @@
 import http from "http";
 import { Server } from "socket.io";
+import dotenv from "dotenv";
+
 import { json } from "@sveltejs/kit";
 import { ChatOpenAI } from "langchain/chat_models/openai";
-import { HumanChatMessage, SystemChatMessage } from "langchain/schema";
-import dotenv from "dotenv";
+
+import { yesteryearDirective } from "./prompts/yesteryear-chronicles";
+import writeYesteryearChronicles from "./socket-callbacks/writeYesteryearChronicles";
 
 dotenv.config();
 
-const configureServer = (server: any) => {
+const configureServer = (server: { httpServer: any }) => {
     const podcastAuthor = new ChatOpenAI({
         temperature: 0.75,
         openAIApiKey: process.env.OPEN_AI_API_KEY,
-        modelName: "gpt-3.5-turbo"
+        modelName: "gpt-3.5-turbo",
+        streaming: true
     });
 
     const io = new Server(server.httpServer);
@@ -19,9 +23,9 @@ const configureServer = (server: any) => {
     io.on("connect", (socket) => {
         socket.emit("handshake", "Connection made successfully");
         socket.on("routeChange", (message) => {
-            console.log("from client: ", message);
-            socket.emit("heardChange", "gotcha!");
+            console.log("Client route: ", message);
         });
+        socket.on("writeYesteryearChronicles", writeYesteryearChronicles(socket, podcastAuthor));
     });
 };
 

@@ -3,16 +3,11 @@
     import { Footer, SidebarPage } from "$lib";
     import { io } from "socket.io-client";
     import { page } from "$app/stores";
+    import { setContext } from "svelte";
 
     const socket = io();
 
-    socket.on("handshake", (message) => {
-        console.log(message);
-    });
-
-    socket.on("heardChange", (message) => {
-        console.log(message);
-    });
+    setContext("socket", socket);
 
     $: {
         socket.emit("routeChange", $page.url.pathname);

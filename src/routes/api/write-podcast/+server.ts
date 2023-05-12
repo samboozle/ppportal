@@ -16,27 +16,6 @@ const yesteryearAuthor = new ChatOpenAI({
 });
 
 const writeYesteryearChronicles = async (episode: YesteryearEpisode) => {
-    const shortStories = `
-Write the Short Stories segment for ${episode.date}. This will cover several topics (listed below).
-
-Here are today's topics:
-${[...episode.shortStoriesTopics].map((topic) => `- ${topic}`).join("\n")}
-    
-Write the segment surveying these topics with banter between Adrian and Becca. Please write a LONG segment, covering each story with at least 5 sentences. Your output should be at least 250 tokens. Use only reliable sources.
-
-${yesteryearFormatting}
-`;
-
-    const deepDiveOne = `
-Create a segment for 'The Yesteryear Chronicles,' a podcast that explores historical events from a specific MM/DD date.
-  - {topic_date}.
-  - Host 1: Adrian, a middle-aged man, warm, professorial, enjoys world history and sports.
-  - Host 2: Becca, a mid-20s woman, upbeat, relatable, enjoys science, music, and birthdays.
-  - Segment type: {segment_type}.
-  - Length: {word_limit} words.
-  - Topic(s) to cover: .
-`;
-
     await yesteryearAuthor.call([new SystemChatMessage(yesteryearDirective)]);
 
     const response = {
