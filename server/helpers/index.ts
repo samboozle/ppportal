@@ -16,6 +16,7 @@ export const createPodcastAuthor = (socket: Socket) =>
         temperature: 0.75,
         openAIApiKey: process.env.OPEN_AI_API_KEY,
         modelName: "gpt-3.5-turbo",
+        // modelName: "gpt-4",
         streaming: true,
         callbacks: [
             {

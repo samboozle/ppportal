@@ -30,6 +30,7 @@
         "deepDiveOne",
         "deepDiveTwo",
         "popCulture",
+        "outro",
         "summary"
     ];
 
@@ -42,8 +43,8 @@
                         `###${segment}###\n\n` +
                         $yesteryearEpisode[segment]
                             .map(({ reader, text }) => `${reader}: ${text}`)
-                            .join("\n") +
-                        "\n\n"
+                            .join("\n\n") +
+                        "\n\n\n"
                     );
                 }, "")
             ],

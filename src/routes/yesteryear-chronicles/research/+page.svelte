@@ -1,6 +1,37 @@
 <script lang="ts">
     import { wikipediaToday, yesteryearEpisode } from "$lib/stores";
+    import type { wikiSummary } from "wikipedia/dist";
     // $: formattedDate = $yesteryearEpisode.date.toISOString().split("T")[0];
+
+    type SortableEvent = {
+        pages: wikiSummary[];
+        year?: number | undefined;
+    };
+
+    const sortFns = {
+        rvChron: (eventA: SortableEvent, eventB: SortableEvent) =>
+            eventB.year && eventA.year ? eventB.year - eventA.year : 0,
+        chron: (eventA: SortableEvent, eventB: SortableEvent) =>
+            eventA.year && eventB.year ? eventA.year - eventB.year : 0,
+        numPages: (eventA: SortableEvent, eventB: SortableEvent) =>
+            eventB.pages.length - eventA.pages.length
+    };
+
+    let sortFn: "rvChron" | "chron" | "numPages" = "rvChron";
+
+    const setSortFn = (kind: "year" | "pages") => {
+        switch (kind) {
+            case "year":
+                sortFn = sortFn === "rvChron" ? "chron" : "rvChron";
+                break;
+            case "pages":
+                sortFn = sortFn === "numPages" ? "rvChron" : "numPages";
+                break;
+            default:
+                sortFn = "rvChron";
+                break;
+        }
+    };
 </script>
 
 {#await $wikipediaToday}
@@ -10,7 +41,7 @@
         {#if events}
             <div class="collapse collapse-arrow w-full">
                 <input type="checkbox" />
-                <div class="collapse-title bg-base-300 flex items-center h-8">
+                <div class="collapse-title bg-base-300 flex items-center h-8 space-x-2">
                     {events.length} Events
                 </div>
                 <div class="collapse-content overflow-x-auto overflow-y-scroll w-full p-0">
@@ -18,16 +49,23 @@
                         <thead class="w-full rounded-none">
                             <tr>
                                 <th> actions </th>
-                                <th> year </th>
+                                <th>
+                                    <button class="sort-button" on:click={() => setSortFn("year")}>
+                                        year
+                                    </button>
+                                </th>
+                                <th>
+                                    <button on:click={() => setSortFn("pages")}> pages </button>
+                                </th>
                                 <th> summary </th>
                             </tr>
                         </thead>
                         <tbody>
-                            {#each events as { text, year }}
+                            {#each events.sort(sortFns[sortFn]) as { text, year, pages }}
                                 <tr>
-                                    <th>
+                                    <th class="space-x-0">
                                         <button
-                                            class="btn btn-sm px-2 btn-ghost"
+                                            class="emoji-button"
                                             on:click={() =>
                                                 yesteryearEpisode.addBulkStory(
                                                     "shortStoriesTopics",
@@ -35,7 +73,7 @@
                                                 )}>📓</button
                                         >
                                         <button
-                                            class="btn btn-sm px-2 btn-ghost"
+                                            class="emoji-button"
                                             on:click={() =>
                                                 yesteryearEpisode.addDeepDive(
                                                     "deepDiveOneTopic",
@@ -43,7 +81,7 @@
                                                 )}>1️⃣</button
                                         >
                                         <button
-                                            class="btn btn-sm px-2 btn-ghost"
+                                            class="emoji-button"
                                             on:click={() =>
                                                 yesteryearEpisode.addDeepDive(
                                                     "deepDiveTwoTopic",
@@ -51,7 +89,7 @@
                                                 )}>2️⃣</button
                                         >
                                         <button
-                                            class="btn btn-sm px-2 btn-ghost"
+                                            class="emoji-button"
                                             on:click={() =>
                                                 yesteryearEpisode.addBulkStory(
                                                     "popCultureTopics",
@@ -60,6 +98,7 @@
                                         >
                                     </th>
                                     <th>{year || "N/A"}</th>
+                                    <th>{pages.length}</th>
                                     <th class="text-xs">{text}</th>
                                 </tr>
                             {/each}
@@ -86,9 +125,9 @@
                         <tbody>
                             {#each births as { text, year }}
                                 <tr>
-                                    <th>
+                                    <th class="emoji-row">
                                         <button
-                                            class="btn btn-sm px-2 btn-ghost"
+                                            class="emoji-button"
                                             on:click={() =>
                                                 yesteryearEpisode.addBulkStory(
                                                     "shortStoriesTopics",
@@ -96,7 +135,7 @@
                                                 )}>📓</button
                                         >
                                         <button
-                                            class="btn btn-sm px-2 btn-ghost"
+                                            class="emoji-button"
                                             on:click={() =>
                                                 yesteryearEpisode.addDeepDive(
                                                     "deepDiveOneTopic",
@@ -104,7 +143,7 @@
                                                 )}>1️⃣</button
                                         >
                                         <button
-                                            class="btn btn-sm px-2 btn-ghost"
+                                            class="emoji-button"
                                             on:click={() =>
                                                 yesteryearEpisode.addDeepDive(
                                                     "deepDiveTwoTopic",
@@ -112,7 +151,7 @@
                                                 )}>2️⃣</button
                                         >
                                         <button
-                                            class="btn btn-sm px-2 btn-ghost"
+                                            class="emoji-button"
                                             on:click={() =>
                                                 yesteryearEpisode.addBulkStory(
                                                     "popCultureTopics",
@@ -144,7 +183,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {#each holidays as { pages, text }}
+                            {#each holidays as { text }}
                                 <tr>
                                     <th>
                                         <button
@@ -165,9 +204,17 @@
     </div>
 {/await}
 
-<style>
+<style lang="postcss">
     th {
-        @apply rounded-none;
+        @apply rounded-none py-0;
+    }
+
+    .sort-button {
+        @apply rounded-none px-1 h-full w-full btn btn-ghost;
+    }
+
+    .emoji-button {
+        @apply btn btn-sm px-2 btn-ghost rounded-none;
     }
 
     .collapse-content {
