@@ -3,22 +3,22 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: CaskaydiaCove;
-    src: url("/Caskaydia\ Cove\ Nerd\ Font\ Complete.ttf") format("truetype");
+  font-family: CaskaydiaCove;
+  src: url("/Caskaydia\ Cove\ Nerd\ Font\ Complete.ttf") format("truetype");
 }
 
 body {
-    @apply font-mono;
+  @apply font-mono;
 }
 
 ::-webkit-scrollbar {
-    @apply bg-base-100;
+  @apply bg-base-100;
 }
 
 ::-webkit-scrollbar-thumb {
-    @apply bg-base-200;
+  @apply bg-base-200;
 }
 
 ::-webkit-scrollbar-corner {
-    @apply bg-base-200;
+  @apply bg-base-200;
 }

@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { page } from "$app/stores";
+  import { page } from "$app/stores";
 
-    export let href: string;
+  export let href: string;
 
-    $: tabClass = "tab tab-lifted" + (href === $page.url.pathname ? " tab-active" : "");
+  $: tabClass = "tab tab-lifted" + (href === $page.url.pathname ? " tab-active" : "");
 </script>
 
 <a class={tabClass} {href}>
-    <slot />
+  <slot />
 </a>

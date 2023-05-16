@@ -54,13 +54,13 @@ The date is ${friendlyDate(episode.date)}. Include a joke about time.
 Below delimted by triple quotes are today's topics:
 """
 ${[
-    episode.deepDiveOneTopic,
-    episode.deepDiveTwoTopic,
-    ...episode.shortStoriesTopics,
-    ...episode.popCultureTopics
+  episode.deepDiveOneTopic,
+  episode.deepDiveTwoTopic,
+  ...episode.shortStoriesTopics,
+  ...episode.popCultureTopics
 ]
-    .map((topic) => `- ${topic}`)
-    .join("\n")}
+  .map((topic) => `- ${topic}`)
+  .join("\n")}
 """
 
 ${goodExample("intro")}
@@ -70,7 +70,7 @@ ${yesteryearFormatting("intro")}
 
 const shortStories = (episode: YesteryearEpisode) => `
 Write the Short Stories segment for ${friendlyDate(
-    episode.date
+  episode.date
 )}. This will cover several topics (listed below).
 
 Below delimited by triple quotes are today's topics:
@@ -110,7 +110,7 @@ ${yesteryearFormatting(`deepDive${number}`)}
 
 const popCulture = (episode: YesteryearEpisode) => `
 Write the Pop Culture segment for ${friendlyDate(
-    episode.date
+  episode.date
 )}. This will cover several topics (listed below).
 
 Below delimited by triple quotes are today's topics:
@@ -160,8 +160,8 @@ The date is ${friendlyDate(episode.date)}.
 Below delimted by triple quotes are today's topics:
 """
 ${[episode.deepDiveOneTopic, episode.deepDiveTwoTopic, ...episode.popCultureTopics]
-    .map((topic) => `- ${topic}`)
-    .join("\n")}
+  .map((topic) => `- ${topic}`)
+  .join("\n")}
 """
 
 ${goodExample("intro")}
@@ -176,13 +176,13 @@ The date is ${friendlyDate(episode.date)}.
 Below delimted by triple quotes are today's topics:
 """
 ${[
-    episode.deepDiveOneTopic,
-    episode.deepDiveTwoTopic,
-    ...episode.shortStoriesTopics,
-    ...episode.popCultureTopics
+  episode.deepDiveOneTopic,
+  episode.deepDiveTwoTopic,
+  ...episode.shortStoriesTopics,
+  ...episode.popCultureTopics
 ]
-    .map((topic) => `- ${topic}`)
-    .join("\n")}
+  .map((topic) => `- ${topic}`)
+  .join("\n")}
 """
 
 ${goodExample("intro")}
@@ -191,13 +191,13 @@ ${yesteryearFormatting("intro")}
 `;
 
 export {
-    intro,
-    shortStories,
-    deepDive,
-    popCulture,
-    outro,
-    summary,
-    rewrite,
-    yesteryearDirective,
-    yesteryearFormatting
+  intro,
+  shortStories,
+  deepDive,
+  popCulture,
+  outro,
+  summary,
+  rewrite,
+  yesteryearDirective,
+  yesteryearFormatting
 };

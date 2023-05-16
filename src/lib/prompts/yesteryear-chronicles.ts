@@ -36,19 +36,19 @@ Offer an overview of the show, mentioning three of the topics.
 Adrian and Becca should play off of each other in this introduction.
 Write each host's line in his or her voice based on their personalities and preferences.
 The date is ${episode.date.toLocaleString("en-US", {
-    month: "long",
-    day: "numeric"
+  month: "long",
+  day: "numeric"
 })}. Include a joke about time.
 
 Here are today's topics:
 ${[
-    episode.deepDiveOneTopic,
-    episode.deepDiveTwoTopic,
-    ...episode.shortStoriesTopics,
-    ...episode.popCultureTopics
+  episode.deepDiveOneTopic,
+  episode.deepDiveTwoTopic,
+  ...episode.shortStoriesTopics,
+  ...episode.popCultureTopics
 ]
-    .map((topic) => `- ${topic}`)
-    .join("\n")}
+  .map((topic) => `- ${topic}`)
+  .join("\n")}
 
 ${yesteryearFormatting}
 `;
