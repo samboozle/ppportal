@@ -1,6 +1,7 @@
 export type YesteryearLine = {
     reader: "Adrian" | "Becca";
     text: string;
+    recording?: any | undefined;
 };
 
 export type YesteryearEpisode = {
@@ -21,7 +22,13 @@ export type YesteryearEpisode = {
 
 export const defaultYesteryearEpisode: YesteryearEpisode = {
     date: new Date(),
-    intro: [],
+    intro: [
+        {
+            reader: "Adrian",
+            text: "Welcome to the yesteryear chronicles."
+        },
+        { reader: "Becca", text: "Thanks, Adrian!" }
+    ],
     shortStories: [],
     deepDiveOne: [],
     deepDiveTwo: [],

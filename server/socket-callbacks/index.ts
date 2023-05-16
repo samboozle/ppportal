@@ -1,3 +1,4 @@
 import rewriteSegment from "./rewrite-segment";
 import writeYesteryearChronicles from "./writeYesteryearChronicles";
-export { rewriteSegment, writeYesteryearChronicles };
+import voiceEleven from "./voice-eleven-labs";
+export { rewriteSegment, writeYesteryearChronicles, voiceEleven };

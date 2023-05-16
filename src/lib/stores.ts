@@ -105,6 +105,13 @@ socket.on("updateYesteryearEpisode", (message) => {
     });
 });
 
+socket.on("voiceLineGenerated", (message) => {
+    yesteryearEpisode.update((episode) => {
+        episode[message.segment as YesteryearSegment][message.index].recording = message.audio;
+        return episode;
+    });
+});
+
 socket.on("addTokenToBuffer", (message) => {
     socketManager.update((manager) => {
         manager.textBuffer += message;

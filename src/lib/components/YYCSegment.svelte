@@ -12,6 +12,11 @@
     let rewriting = false;
     $: buttonText = rewriting ? "edit" : "rewrite";
 
+    $: wordCount = $yesteryearEpisode[segment].reduce((acc: number, { text }: YesteryearLine) => {
+        const wordCount = text.split(/\s+/g).length;
+        return acc + wordCount;
+    }, 0);
+
     const rewriteSegment = () => {
         socket.emit("rewriteSegment", {
             segment,
@@ -26,7 +31,7 @@
 
 <div class="script-segment">
     <div class="command-bar">
-        <p class="text-sm">{segment}</p>
+        <p class="text-sm">{segment} ({wordCount} words)</p>
         <button class="btn btn-xs normal-case" on:click={() => (rewriting = !rewriting)}>
             {buttonText}
         </button>

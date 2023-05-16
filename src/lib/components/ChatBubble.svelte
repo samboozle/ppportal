@@ -1,17 +1,23 @@
 <script lang="ts">
     import type { YesteryearSegment } from "$lib/data/yesteryear";
-    import { yesteryearEpisode } from "$lib/stores";
+    import { socketManager, yesteryearEpisode } from "$lib/stores";
     export let index: number;
     export let segment: YesteryearSegment;
 
+    const { socket } = $socketManager;
+
     $: line = $yesteryearEpisode[segment][index];
-    $: rowCount = Math.ceil(line.text.length / 45);
+    $: rowCount = Math.ceil(line.text.length / 100);
 
     const updateLineText = (e: any) => {
         yesteryearEpisode.update((ep) => {
             ep[segment][index].text = e.target.value;
             return ep;
         });
+    };
+
+    const generateVoiceLine = () => {
+        socket.emit("generateVoiceLine", { line, index, segment });
     };
 </script>
 
@@ -22,15 +28,21 @@
         </div>
     </div>
     <textarea
-        class="chat-bubble w-full text-2xs"
+        class="chat-bubble w-4/5 text-2xs"
         wrap="soft"
         rows={rowCount}
         bind:value={line.text}
         on:change={updateLineText}
     />
+    <div>
+        {#if line.recording}
+            <button class="btn btn-xs btn-ghost p-1"> ▶️ </button>
+        {/if}
+        <button class="btn btn-xs btn-ghost p-1" on:click={generateVoiceLine}> 🔄 </button>
+    </div>
 </div>
 
-<style>
+<style lang="postcss">
     .letter-avatar {
         @apply w-10 flex items-center justify-center text-2xl rounded-full bg-yellow-700 text-base-100;
     }
