@@ -32,8 +32,6 @@ export default (socket: Socket, chat: ChatOpenAI) => async (message: YesteryearE
   ]) {
     socket.emit("addTokenToBuffer", `writing ${segment}\n\n`);
 
-    console.log("prompt for", segment, prompt);
-
     const { text } = await chat.call([new HumanChatMessage(prompt)]);
     // const { text } = await chat.call({ input: prompt });
 

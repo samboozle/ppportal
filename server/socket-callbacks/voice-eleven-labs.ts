@@ -27,8 +27,6 @@ export default (socket: Socket) =>
     index: number;
     line: YesteryearLine;
   }) => {
-    console.log("called...");
-
     socket.emit("setBuffer", `Auditioning line for ${line.reader}`);
 
     const headers = {
@@ -68,8 +66,6 @@ export default (socket: Socket) =>
         completed = true;
         break;
       }
-
-      console.log(new Uint8Array(value));
 
       socket.emit("addTokenToBuffer", `\n${chunkCount} chunks...`);
       socket.emit("voiceLineChunkGenerated", {

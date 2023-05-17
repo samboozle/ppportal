@@ -39,7 +39,6 @@
   };
 
   onMount(async () => {
-    console.log("onMount called");
     audio = document.createElement("audio");
     mediaSource = new MediaSource();
     audio.src = URL.createObjectURL(mediaSource);
@@ -54,6 +53,7 @@
         }
       });
     });
+    appendChunk(recording);
   });
 
   const generateVoiceLine = () => {
@@ -89,7 +89,9 @@
     on:change={updateLineText}
   />
   <div>
-    <button class="btn btn-xs btn-ghost p-1" on:click={playVoiceLine}> play </button>
+    {#if recording.length}
+      <button class="btn btn-xs btn-ghost p-1" on:click={playVoiceLine}> play </button>
+    {/if}
     <button class="btn btn-xs btn-ghost p-1" on:click={generateVoiceLine}> 🔄 </button>
   </div>
 </div>
