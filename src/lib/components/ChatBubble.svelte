@@ -14,7 +14,7 @@
   let isClearing = false;
 
   $: line = $yesteryearEpisode[segment][index];
-  $: rowCount = Math.ceil(line.text.length / 100);
+  $: rowCount = Math.ceil(line.text.length / 40);
   $: recording = line.recording;
 
   $: {
